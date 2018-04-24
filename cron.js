@@ -40,7 +40,7 @@ const cronContext = {
 
                             function recursiveSendMessage(row) {
                                 const CHATID=row[9];
-                                const URL=`https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`;
+                                const URL=`https://api.telegram.org/bot${row[10]}/sendMessage`;
                                 const TEXT=`Добрый день, Вам назначено собеседование на ${row[1]} ${row[0]}`;
                                 const keyboard = {
                                     keyboard: [
@@ -76,7 +76,7 @@ const cronContext = {
 };
 
 const job = new CronJob({
-    cronTime: '00 30 09 * * 0-6',
+    cronTime: '00 10 15 * * 0-6',
     ...cronContext
 });
 
