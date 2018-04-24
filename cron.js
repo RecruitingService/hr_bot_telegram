@@ -76,7 +76,7 @@ const cronContext = {
 };
 
 const job = new CronJob({
-    cronTime: '00 10 15 * * 0-6',
+    cronTime: '00 30 09 * * 0-6',
     ...cronContext
 });
 

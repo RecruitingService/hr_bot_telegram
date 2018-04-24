@@ -75,7 +75,7 @@ module.exports = {
             sheets.spreadsheets.values.get({
                 auth,
                 spreadsheetId,
-                range: 'A:J',
+                range: 'A:K',
             }, (err, response) => {
                 if (err) {
                     console.log('The API returned an error: ' + err);
