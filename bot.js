@@ -14,7 +14,7 @@ const _ = require('lodash');
 const moment = MomentRange.extendMoment(Moment);
 require('dotenv').config();
 const texts = require('./texts/common');
-const responses = require('./texts/responses')
+const responses = require('./texts/responses');
 const { enter, leave } = Stage;
 const globalObj = {};
 
@@ -92,16 +92,12 @@ startScene.on('message', ctx => ctx.reply(texts.dayDefValue));
  */
 const dayScene = new Scene('day');
 const time = ['утро', 'день', 'вечер'];
-const ranges = [
-    [10, 12],
-    [13, 16],
-    [16, 19]
-];
 function makeTwentyMinutes(ctx, i, type) {
-    const from = moment(ranges[i][0].toString(), 'h').format();
-    const till = moment(ranges[i][1].toString(), 'h').format();
+
+    const from = moment(responses[ctx.tg.token].ranges[i][0].toString(), 'h').format();
+    const till = moment(responses[ctx.tg.token].ranges[i][1].toString(), 'h').format();
     const range = moment.range(from, till);
-    const hours = Array.from(range.by('minutes', { step: 20 })).map(one => one.format('HH:mm'));
+    const hours = Array.from(range.by('minutes', { step: responses[ctx.tg.token].timeGap })).map(one => one.format('HH:mm'));
     const resultArr = [];
 
     return new Promise((resolve, reject) => {
@@ -200,7 +196,8 @@ timeScene.leave(ctx => {
                             }
                         }
                         if (_.isEmpty(array)) {
-                            addRow(doc, [globalObj[ctx.update.callback_query.from.id].day, globalObj[ctx.update.callback_query.from.id].hour, null,
+                            addRow(doc, [
+                                globalObj[ctx.update.callback_query.from.id].day, globalObj[ctx.update.callback_query.from.id].hour, null,
                                 globalObj[ctx.update.callback_query.from.id].fullname,
                                 globalObj[ctx.update.callback_query.from.id].phone, null, null, 'в процессе', null,
                                 globalObj[ctx.update.callback_query.from.id].id],
@@ -317,4 +314,5 @@ function createBot(token) {
 
 createBot(process.env.BOT_TOKEN_1);
 createBot(process.env.BOT_TOKEN_2);
+createBot(process.env.BOT_TOKEN_INFINITI);
 
